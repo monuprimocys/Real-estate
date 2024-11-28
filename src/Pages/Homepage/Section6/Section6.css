@@ -1,0 +1,22 @@
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee-container {
+  width: 200%; /* Twice the width to accommodate both copies of the text */
+}
+
+.animate-marquee {
+  display: flex;
+  width: 100%;
+  animation: marquee 15s linear infinite;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
