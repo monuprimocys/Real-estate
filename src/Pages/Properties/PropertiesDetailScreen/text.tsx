@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGet_featuresMutation } from "../../../app/api/feature_all_property/feature_all_property";
+import { usePropertyDetailScreen_apiMutation } from "../../../app/api/PropertyDetailScreenApi/PropertyDetailScreen_api";
 import bedicon1 from "../../../assets/Image/cardicon1.png";
 import Bathsicon from "../../../assets/Image/cardicon2.png";
 import Areaicon from "../../../assets/Image/cardicon3.png";
@@ -9,30 +9,38 @@ import locationIcon from "../../../assets/Image/location.png";
 import heartIcon from "../../../assets/Image/heart.png";
 import Headingcontent from "../../../componets/Headingcontent/Headingcontent";
 import PropertiesHomeScreenCard from "../../../componets/Cards/PropertiesHomeScreenCard/PropertiesHomeScreenCard";
-import prevIcon from "../../../assets/Image/arrow-left.png";
-import nextIcon from "../../../assets/Image/arrow-right.png";
-
-function PropertyHomeScreenFeatures() {
-  const [getFeatures, { isLoading, isError }] = useGet_featuresMutation();
+import { useParams } from "react-router-dom";
+function PropertiesDetailScreenSimilarProperties() {
+  const [getFeatures] = usePropertyDetailScreen_apiMutation();
   const [featuresData, setFeaturesData] = useState([]);
-  const [startIndex, setStartIndex] = useState(1); // Start with the first real card
+  const [startIndex, setStartIndex] = useState(1);
   const [visibleCardsCount, setVisibleCardsCount] = useState(4);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const { id } = useParams();
 
   // Fetch features data
   useEffect(() => {
     async function fetchFeatures() {
       try {
-        const response = await getFeatures().unwrap();
-        setFeaturesData(response.feature_property || []);
+        const response = await getFeatures({ id: id }).unwrap();
+
+        console.log("223232", response);
+
+        if (response?.response_code === "1") {
+          console.log("Response is error", response);
+
+          setFeaturesData(response.similar_products || []);
+          return;
+        }
       } catch (error) {
         console.error("Error fetching features data:", error);
       }
     }
     fetchFeatures();
-  }, [getFeatures]);
+  }, [getFeatures, id]);
 
-  // Update visibleCardsCount based on screen size
+  console.log("Fetching features", featuresData);
+
   useEffect(() => {
     function updateCardsCount() {
       const width = window.innerWidth;
@@ -74,7 +82,7 @@ function PropertyHomeScreenFeatures() {
   }, [startIndex, featuresData]);
 
   const clonedData = [
-    featuresData[featuresData.length - 1],
+    featuresData[featuresData.length],
     ...featuresData,
     ...featuresData,
   ];
@@ -82,31 +90,14 @@ function PropertyHomeScreenFeatures() {
   // Calculate translateX for smooth sliding
   const translateXValue = -(startIndex * (100 / visibleCardsCount));
 
-  // Function to move to the previous card
-  const handlePrevClick = () => {
-    setIsTransitioning(true);
-    setStartIndex((prevIndex) =>
-      prevIndex === 1 ? featuresData.length : prevIndex - 1
-    );
-  };
-
-  // Function to move to the next card
-  const handleNextClick = () => {
-    setIsTransitioning(true);
-    setStartIndex((prevIndex) =>
-      prevIndex === featuresData.length ? 1 : prevIndex + 1
-    );
-  };
-
   return (
     <div className="w-full h-full mt-10 rounded-[4rem] py-16 overflow-hidden">
       <div className="flex items-center justify-center">
         <h2 className="text-2xl font-bold text-black md:text-5xl Bostonfont">
-          <Headingcontent title="Featured " highlightedTitle=" Properties" />
+          <Headingcontent title="Similar  " highlightedTitle=" Properties" />
         </h2>
       </div>
-      <div className="relative mt-10 overflow-hidden 2xl:w-[80%] mx-auto w-[90%] md:w-[95%] lg:w-[90%] xl:w-[85%]">
-        {/* Slider */}
+      <div className="relative mt-10 overflow-hidden 2xl:w-[80%] mx-auto w-[90%] md:w-[95%] lg:w-[90%] xl:w-[85%] ">
         <div
           className={`flex ${
             isTransitioning
@@ -145,23 +136,9 @@ function PropertyHomeScreenFeatures() {
             </div>
           ))}
         </div>
-
-        {/* Previous and Next buttons */}
-        <button
-          onClick={handlePrevClick}
-          className="absolute left-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
-        >
-          <img src={prevIcon} alt="Previous" className="w-6 h-6" />
-        </button>
-        <button
-          onClick={handleNextClick}
-          className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
-        >
-          <img src={nextIcon} alt="Next" className="w-6 h-6" />
-        </button>
       </div>
     </div>
   );
 }
 
-export default PropertyHomeScreenFeatures;
+export default PropertiesDetailScreenSimilarProperties;

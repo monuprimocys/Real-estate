@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGet_featuresMutation } from "../../../app/api/feature_all_property/feature_all_property";
+import { usePropertyDetailScreen_apiMutation } from "../../../app/api/PropertyDetailScreenApi/PropertyDetailScreen_api";
 import bedicon1 from "../../../assets/Image/cardicon1.png";
 import Bathsicon from "../../../assets/Image/cardicon2.png";
 import Areaicon from "../../../assets/Image/cardicon3.png";
@@ -9,30 +9,34 @@ import locationIcon from "../../../assets/Image/location.png";
 import heartIcon from "../../../assets/Image/heart.png";
 import Headingcontent from "../../../componets/Headingcontent/Headingcontent";
 import PropertiesHomeScreenCard from "../../../componets/Cards/PropertiesHomeScreenCard/PropertiesHomeScreenCard";
-import prevIcon from "../../../assets/Image/arrow-left.png";
-import nextIcon from "../../../assets/Image/arrow-right.png";
+import { useParams } from "react-router-dom";
+import prevIcon from "../../../assets/Image/arrow-left.png"; // Add your previous icon here
+import nextIcon from "../../../assets/Image/arrow-right.png"; // Add your next icon here
 
-function PropertyHomeScreenFeatures() {
-  const [getFeatures, { isLoading, isError }] = useGet_featuresMutation();
+function PropertiesDetailScreenSimilarProperties() {
+  const [getFeatures] = usePropertyDetailScreen_apiMutation();
   const [featuresData, setFeaturesData] = useState([]);
-  const [startIndex, setStartIndex] = useState(1); // Start with the first real card
+  const [startIndex, setStartIndex] = useState(1);
   const [visibleCardsCount, setVisibleCardsCount] = useState(4);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const { id } = useParams();
 
   // Fetch features data
   useEffect(() => {
     async function fetchFeatures() {
       try {
-        const response = await getFeatures().unwrap();
-        setFeaturesData(response.feature_property || []);
+        const response = await getFeatures({ id: id }).unwrap();
+        if (response?.response_code === "1") {
+          setFeaturesData(response.similar_products || []);
+          return;
+        }
       } catch (error) {
         console.error("Error fetching features data:", error);
       }
     }
     fetchFeatures();
-  }, [getFeatures]);
+  }, [getFeatures, id]);
 
-  // Update visibleCardsCount based on screen size
   useEffect(() => {
     function updateCardsCount() {
       const width = window.innerWidth;
@@ -102,7 +106,7 @@ function PropertyHomeScreenFeatures() {
     <div className="w-full h-full mt-10 rounded-[4rem] py-16 overflow-hidden">
       <div className="flex items-center justify-center">
         <h2 className="text-2xl font-bold text-black md:text-5xl Bostonfont">
-          <Headingcontent title="Featured " highlightedTitle=" Properties" />
+          <Headingcontent title="Similar  " highlightedTitle=" Properties" />
         </h2>
       </div>
       <div className="relative mt-10 overflow-hidden 2xl:w-[80%] mx-auto w-[90%] md:w-[95%] lg:w-[90%] xl:w-[85%]">
@@ -164,4 +168,4 @@ function PropertyHomeScreenFeatures() {
   );
 }
 
-export default PropertyHomeScreenFeatures;
+export default PropertiesDetailScreenSimilarProperties;

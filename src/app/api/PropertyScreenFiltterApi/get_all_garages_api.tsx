@@ -9,7 +9,7 @@ interface SubmitResponse {
 export const  get_all_garages_api = createApi({
   reducerPath: " get_all_garages_api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.9:8002/api",
+    baseUrl: "http://192.168.0.8:8002/api",
   }),
   endpoints: (builder) => ({
     get_all_garages: builder.mutation<

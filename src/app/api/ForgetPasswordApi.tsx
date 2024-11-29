@@ -6,20 +6,20 @@ interface SubmitResponse {
   message: string;
 }
 
-export const get_all_status_api = createApi({
-  reducerPath: "get_all_status_api",
+export const ForgetPasswordApi = createApi({
+  reducerPath: "ForgetPasswordApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://192.168.0.8:8002/api",
   }),
   endpoints: (builder) => ({
-    get_all_status: builder.mutation<
+    login: builder.mutation<
       SubmitResponse,
       {
-        status: string;
+        email: string;
       }
     >({
       query: (formData) => ({
-        url: "/get_all_status",
+        url: "/forgot_pass",
         method: "POST",
         body: formData,
       }),
@@ -27,4 +27,5 @@ export const get_all_status_api = createApi({
   }),
 });
 
-export const { useGet_all_statusMutation } = get_all_status_api;
+// eslint-disable-next-line react-refresh/only-export-components
+export const { useLoginMutation } = ForgetPasswordApi;

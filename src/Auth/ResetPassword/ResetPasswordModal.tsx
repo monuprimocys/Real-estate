@@ -8,8 +8,8 @@ import pwdicon from "../../assets/Image/loginpwdicon.png";
 import eyecloseicon from "../../assets/Image/loginpwdeyeiconclose.png";
 import eyeopenicon from "../../assets/Image/loginpwdeyeiconopen.png";
 import RegistrationModal from "../RegistrationPage/RegistrationModal";
-import ForgotpasswordModal from "../Forgotpassword/ForgotpasswordModal";
 
+import emailicon from "../../assets/Image/loginemailicon.png";
 const ResetPasswordModal: React.FC = () => {
   const dispatch = useDispatch();
   const isVisible = useSelector(
@@ -88,6 +88,31 @@ const ResetPasswordModal: React.FC = () => {
         {/* Form Section */}
         <div className="w-full px-4 sm:px-6 md:px-8">
           <form>
+            {/* email */}
+            <div className="mb-5">
+              <label
+                className="text-sm font-medium text-[#000000]"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <div className="relative flex items-center mt-2">
+                <span className="absolute left-2 bg-[#B5843D36] w-[2.5rem] h-[2.5rem] rounded-full flex justify-center items-center">
+                  <img
+                    src={emailicon}
+                    alt="Email Icon"
+                    className="object-cover w-[1.5rem] h-[1.5rem]"
+                  />
+                </span>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full pl-14 py-3 bg-white border border-[#B5843F66] rounded-md focus:outline-none focus:ring-[#B5843F66] focus:border-[#B5843F66] text-[#000000] placeholder-gray-500"
+                  placeholder="Enter your email"
+                />
+              </div>
+            </div>
             {/* Password Input */}
             <div className="mb-5">
               <label
@@ -121,20 +146,6 @@ const ResetPasswordModal: React.FC = () => {
                     className="object-cover w-[1.5rem] h-[1.5rem]"
                   />
                 </span>
-              </div>
-              {/* Forgot Password */}
-              <div className="flex justify-end mt-4 mb-4 cursor-pointer">
-                <p
-                  className="text-sm text-[#B5843F] font-medium"
-                  onClick={() => {
-                    dispatch(hideModal("loginModal"));
-
-                    dispatch(hideModal("registrationModal"));
-                    dispatch(showModal("forgotpasswordModal"));
-                  }}
-                >
-                  Forgot Password ?
-                </p>
               </div>
             </div>
             <div>
@@ -197,7 +208,6 @@ const ResetPasswordModal: React.FC = () => {
           </form>
         </div>
       </div>
-
     </div>
   );
 };

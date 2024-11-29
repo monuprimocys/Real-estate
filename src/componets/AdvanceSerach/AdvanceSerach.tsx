@@ -15,13 +15,13 @@ import { useGet_sortby_optionsMutation } from "../../app/api/PropertyScreenFiltt
 import { useGet_all_garagesMutation } from "../../app/api/PropertyScreenFiltterApi/get_all_garages_api";
 import { useGet_all_property_featureMutation } from "../../app/api/PropertyScreenFiltterApi/get_all_property_feature_api";
 import { useGet_all_filtterMutation } from "../../app/api/PropertyScreenFiltterApi/filtter_api";
+import { useGet_all_statusMutation } from "../../app/api/PropertyScreenFiltterApi/get_all_status_api";
 import { useDispatch } from "react-redux";
 import {
   reset_filters,
   update_multiple_filters,
 } from "../../app/Slices/PropertyScreenFiltter/main_filtter/filtter_Slice";
 import { Toaster, toast } from "react-hot-toast";
-import { useGet_all_statusMutation } from "../../app/api/PropertyScreenFiltterApi/get_all_status_api";
 
 function AdvanceSerach() {
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
@@ -95,8 +95,14 @@ function AdvanceSerach() {
           setGarages(garageResponse.all_garages || []);
         if (featureResponse.response_code === "1")
           setFeatures(featureResponse.all_parent_feature || []);
-        if (statusResponse.response_code === "1")
-          setStatus(statusResponse.all_parent_status || []);
+
+        if (statusResponse.response_code === "1") {
+          // Filter out the item with id "1" from the status array
+          const filteredStatus = statusResponse.all_parent_status.filter(
+            (status) => status.id !== "1"
+          );
+          setStatus(filteredStatus || []);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -197,7 +203,6 @@ function AdvanceSerach() {
       return updatedFilters;
     });
   }, []);
-
 
   const dispatch = useDispatch();
 

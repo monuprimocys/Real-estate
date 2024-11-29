@@ -1,6 +1,7 @@
 import PropertiesFeatured from "./PropertiesFeatured/PropertiesFeatured";
 import PropertiesHeaderpage from "./PropertiesHeaderpage/PropertiesHeaderpage";
 import PropertiesHomeScreen from "./PropertiesHomeScreen/PropertiesHomeScreen";
+import GMap from "./PropertyHomeScreenFeactures/googlemap";
 
 function Propertices() {
   return (
@@ -8,7 +9,7 @@ function Propertices() {
       <div className="h-auto">
         <PropertiesHeaderpage />
         <PropertiesHomeScreen />
-
+        <GMap />
         {/* <PropertiesFeatured /> */}
       </div>
     </>

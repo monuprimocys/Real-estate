@@ -24,12 +24,15 @@ import get_all_filtter_Reducer from "./Slices/PropertyScreenFiltter/main_filtter
 import { get_all_status_api } from "./api/PropertyScreenFiltterApi/get_all_status_api";
 import get_all_status_Reducer from "../app/Slices/PropertyScreenFiltter/get_all_status/get_all_statusSlice";
 import { PropertyDetailScreen_api } from "./api/PropertyDetailScreenApi/PropertyDetailScreen_api";
+import forgetPasswordReducer from "../app/Slices/ForgetPassword/ForgetpasswordSlice";
+import { ForgetPasswordApi } from "../app/api/ForgetPasswordApi";
 
 export const store = configureStore({
   reducer: {
     modals: modalReducer,
     registration: registrationReducer,
     login: loginReducer,
+    forgetpassword: forgetPasswordReducer,
     get_all_main_location: get_all_main_location_Reducer,
     get_bathroom: get_bathroom_Reducer,
     get_bedroom: get_bedroom_Reducer,
@@ -49,10 +52,12 @@ export const store = configureStore({
     [get_all_garages_api.reducerPath]: get_all_garages_api.reducer,
     [get_property_type_api.reducerPath]: get_property_type_api.reducer,
     [get_sortby_options_api.reducerPath]: get_sortby_options_api.reducer,
-    [get_all_property_feature_api.reducerPath]: get_all_property_feature_api.reducer,
+    [get_all_property_feature_api.reducerPath]:
+      get_all_property_feature_api.reducer,
     [get_filtter_api.reducerPath]: get_filtter_api.reducer,
     [get_all_status_api.reducerPath]: get_all_status_api.reducer,
     [PropertyDetailScreen_api.reducerPath]: PropertyDetailScreen_api.reducer,
+    [ForgetPasswordApi.reducerPath]: ForgetPasswordApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -67,8 +72,8 @@ export const store = configureStore({
       .concat(get_all_property_feature_api.middleware)
       .concat(get_filtter_api.middleware)
       .concat(get_all_status_api.middleware)
-      .concat(PropertyDetailScreen_api.middleware),
-
+      .concat(PropertyDetailScreen_api.middleware)
+      .concat(ForgetPasswordApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

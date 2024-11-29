@@ -7,8 +7,6 @@ import PropertiesHomeScreenCard from "../../../componets/Cards/PropertiesHomeScr
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/joy/CircularProgress";
-import GoogleMapReact from "google-map-react";
-import { MdLocationPin } from "react-icons/md";
 import heartIcon from "../../../assets/Image/heart.png";
 import locationIcon from "../../../assets/Image/location.png";
 import bedicon1 from "../../../assets/Image/cardicon1.png";
@@ -20,7 +18,8 @@ import PropertyHomeScreenFeactures from "../PropertyHomeScreenFeactures/Property
 import properticescallicon from "../../../assets/Image/properticeiconcall.png";
 import properticesiconwhatshop from "../../../assets/Image/properticeiconwhatshp.png";
 import smsicon from "../../../assets/Image/sms.jpg";
-import { Tooltip } from "@mui/material";
+
+import GMap from "../PropertyHomeScreenFeactures/googlemap";
 
 function PropertiesHomeScreen() {
   const filterData = useSelector((state) => state.get_all_filtter);
@@ -86,7 +85,6 @@ function PropertiesHomeScreen() {
     navigate(`/propertiesDetail/${id}`);
   };
 
-  console.log("11111111111111111111", displayedProperties);
 
   return (
     <div className="w-full h-auto mt-10">
@@ -153,7 +151,7 @@ function PropertiesHomeScreen() {
 
             <div className="flex flex-col items-center justify-between h-full w-[93%] mx-auto gap-6 md:w-[100%] lg:w-[97%]  pr-2  xl:w-[95%] overflow-hidden">
               <div style={{ width: "100%" }} className="min-h-screen">
-                <GoogleMapReact
+                {/* <GoogleMapReact
                   bootstrapURLKeys={{
                     key: "AIzaSyAMZ4GbRFYSevy7tMaiH5s0JmMBBXc0qBA",
                   }}
@@ -161,28 +159,23 @@ function PropertiesHomeScreen() {
                   defaultZoom={12}
                   draggable={true}
                   options={{
-                    zoomControl: true, // Enable zoom controls
-                    scrollwheel: true, // Allow mouse wheel zoom
-                    gestureHandling: "auto", // Enable gestures like pinch zoom
+                    zoomControl: true,
+                    scrollwheel: true,
+                    gestureHandling: "auto",
                   }}
                 >
-                  {displayedProperties.map((property, id) => (
+                  {displayedProperties.map((property) => (
                     <div
-                      key={property.id} // Unique key for each property
-                      lat={(property.lat) || 0} // Parsing lat, defaulting to 0 if invalid
-                      lng={(property.lon) || 0} // Parsing lon, defaulting to 0 if invalid
-                      style={{
-                        position: "absolute",
-                        transform: "translate(-50%, -50%)", // Center the marker
-                        cursor: "pointer",
-                      }}
+                      key={property.id}
+                      lat={property.lat || 0}
+                      lng={property.lon || 0}
                     >
-                      {/* Marker icon */}
+                      
                       <MdLocationPin className="text-3xl text-black" />
-
                     </div>
                   ))}
-                </GoogleMapReact>
+                </GoogleMapReact> */}
+                <GMap />
               </div>
               <div
                 className="w-full h-auto p-6 bg-white rounded-md shadow-md 2xl:mb-16"

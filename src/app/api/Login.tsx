@@ -9,7 +9,7 @@ interface SubmitResponse {
 export const Loginapi = createApi({
   reducerPath: "Loginapi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.9:8002/api",
+    baseUrl: "http://192.168.0.8:8002/api",
   }),
   endpoints: (builder) => ({
     login: builder.mutation<
