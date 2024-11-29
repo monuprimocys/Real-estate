@@ -22,6 +22,7 @@ import {
   update_multiple_filters,
 } from "../../app/Slices/PropertyScreenFiltter/main_filtter/filtter_Slice";
 import { Toaster, toast } from "react-hot-toast";
+import { useLocation } from "react-router-dom";
 
 function AdvanceSerach() {
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
@@ -46,6 +47,24 @@ function AdvanceSerach() {
   const [selectedFeatureIds, setSelectedFeatureIds] = useState("");
   const [activeFilters, setActiveFilters] = useState([]);
   const [active, setActive] = useState("2");
+
+  const location = useLocation();
+
+  console.log("Location current", location.pathname);
+  const isSaleOrRentPage =
+    location.pathname === "/forsale" || location.pathname === "/forrent";
+
+  // useEffect(() => {
+  //   if (location.pathname === "/forsale") {
+  //     setActive("2");
+      
+  //   } else if (location.pathname === "/forrent") {
+  //     setActive("3");
+      
+  //   }
+  // }, [location.pathname]); 
+
+  console.log("Location current", location.pathname);
 
   // All type of api
   const [getAllLocations] = useGet_all_main_locationMutation();
@@ -315,13 +334,17 @@ function AdvanceSerach() {
 
   return (
     <div
-      className={`w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto bg-[#FFFFFF] rounded-lg flex flex-col items-center relative px-8 mt-10 ${
+      className={`w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto rounded-lg flex flex-col items-center relative bg-[#FFFFFF] px-8 mt-10 ${
         showAdvancedSearch ? "pb-4" : "pb-1"
       }`}
     >
       <Toaster />
       {/* status buttons */}
-      <div className="absolute top-[-1.5rem] md:left-8 2xl:w-[18%] h-[2.8rem] bg-[#FFFFFF] rounded-3xl flex justify-between items-center">
+      <div
+        className={`absolute top-[-1.5rem] md:left-8 2xl:w-[18%] h-[2.8rem] bg-[#FFFFFF] rounded-3xl flex justify-between items-center ${
+          isSaleOrRentPage ? "hidden" : "block"
+        }`}
+      >
         <button
           type="button"
           className={`px-10 h-full transition-colors duration-300 rounded-3xl font-medium ${
@@ -329,7 +352,7 @@ function AdvanceSerach() {
               ? "bg-[#B5843F] text-white"
               : "bg-white text-black opacity-65"
           }`}
-          onClick={() => setActive("2")} // sale id 2
+          onClick={() => setActive("2")}
         >
           Sale
         </button>
@@ -340,7 +363,7 @@ function AdvanceSerach() {
               ? "bg-[#B5843F] text-white"
               : "bg-white text-black opacity-65"
           }`}
-          onClick={() => setActive("3")} // Rent ID 3
+          onClick={() => setActive("3")}
         >
           Rent
         </button>

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Properticesbgheaderimage from "../../../assets/Image/properticesheaderbg.png";
 import Header from "../../Header/Header";
 import AdvanceSerach from "../../../componets/AdvanceSerach/AdvanceSerach";
 import { useLocation } from "react-router-dom";
 
-
 const PropertiesHeaderpage: React.FC = () => {
   const location = useLocation();
   console.log("Location", location.pathname);
 
-
-
+  // Define an array of paths where AdvanceSearch should not be displayed
+  const hideAdvanceSearchPaths = ["/about", "/contact"];
 
   return (
     <div
@@ -23,7 +22,10 @@ const PropertiesHeaderpage: React.FC = () => {
       }}
     >
       <Header />
-      <AdvanceSerach />
+
+      {/* Conditionally render AdvanceSerach based on the current path */}
+      {!hideAdvanceSearchPaths.includes(location.pathname) && <AdvanceSerach />}
+
       <div className="w-[90%] xl:w-[90%] mx-auto flex items-center relative mt-10">
         <div className="flex items-start justify-start w-full">
           <h4 className="text-3xl font-bold text-white Bostonfont">

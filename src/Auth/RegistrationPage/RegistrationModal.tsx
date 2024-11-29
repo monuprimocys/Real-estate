@@ -57,6 +57,30 @@ const RegistrationModal: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Dispatch form data to Redux store
+    dispatch(
+      setFormDataRegistration({
+        name: "first_name",
+        value: formData.first_name,
+      })
+    );
+    dispatch(
+      setFormDataRegistration({ name: "last_name", value: formData.last_name })
+    );
+    dispatch(setFormDataRegistration({ name: "email", value: formData.email }));
+    dispatch(
+      setFormDataRegistration({ name: "password", value: formData.password })
+    );
+    dispatch(
+      setFormDataRegistration({
+        name: "confirm_password",
+        value: formData.confirm_password,
+      })
+    );
+    dispatch(
+      setFormDataRegistration({ name: "mobile", value: formData.mobile })
+    );
+
     try {
       const response = await registerUser(formData).unwrap();
 

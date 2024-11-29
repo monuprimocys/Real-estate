@@ -1,10 +1,12 @@
 import Headingcontent from "../../componets/Headingcontent/Headingcontent";
 import PropertiesHeaderpage from "../Properties/PropertiesHeaderpage/PropertiesHeaderpage";
-import aboutbgimage from "../../assets/Image/aboutbgimage.png";
+import aboutbgimage from "../../assets/Image/aboutsectionimage.png";
 import contactbgimage from "../../assets/Image/aboutcontactbg.png";
 import properticescallicon from "../../assets/Image/abouticoncall.png";
 import aboutlocationicon from "../../assets/Image/asboutlocation.png";
 import aboutsms from "../../assets/Image/aboutsms.jpg";
+import aboutsection12 from "../../assets/Image/aboutsection12.png";
+import aboutsection13 from "../../assets/Image/aboutsection13.png";
 
 function About() {
   return (
@@ -21,12 +23,12 @@ function About() {
         <div className="w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto bg-[#FFFFFF] h-auto rounded-lg flex flex-col items-center relative p-4 xl:py-10  text-white justify-start">
           <div className="flex flex-col items-start justify-between lg:flex-row gap-y-10 lg:gap-x-24">
             <div className="flex-1 text-[#000000]">
-              <h3 className="text-3xl font-semibold Bostonfont md:text-4xl lg:text-5xl 2xl:text-6xl">
+              <h3 className="text-3xl font-semibold Bostonfont md:text-4xl lg:text-5xl 2xl:text-5xl">
                 We are your partner in creating a legacy building facade.
               </h3>
             </div>
             <div className="flex-1 text-[#343434] mt-4 lg:mt-0">
-              <p className="text-xl md:text-2xl lg:text-3xl Bostonfont">
+              <p className="text-xl md:text-2xl Bostonfont">
                 Discover unparalleled excellence in real estate services at
                 Lika, your premier choice in Golem. Nestled in the heart of this
                 vibrant community, we proudly stand atop the real estate market,
@@ -126,7 +128,7 @@ function About() {
         </div>
 
         <div
-          className="w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto  h-auto rounded-xl pr-4 pb-4 mt-10 justify-center cursor-pointer  overflow-hidden"
+          className="w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto  h-auto rounded-xl pr-4 pb-4 mt-10 justify-center cursor-pointer  overflow-hidden py-10"
           style={{
             boxShadow: "2px 4px 14.4px 0 rgba(0, 0, 0, 0.094)",
             border: "1.78px solid #ECECEC",
@@ -137,12 +139,104 @@ function About() {
           </div>
 
           {/* content */}
-          <div
-            className="w-[80%] mx-auto"
-           
-          >
+          <div className="w-[85%] mx-auto flex justify-between items-center  mt-10 relative">
+            {/* text content */}
+            <div className="w-[40%]  bg-[#B5843F] rounded-lg p-4 relative z-20 right-[-3rem]">
+              <p className="text-xl text-center text-white Bostonfont">
+                Discover unparalleled excellence in real estate services at
+                Lika, your premier choice in Golem. Nestled in the heart of this
+                vibrant community, we proudly stand atop the real estate market,
+                offering a blend of expertise, integrity, and dedication that
+                sets us apart.
+              </p>
+            </div>
 
-           
+            {/* image */}
+
+            <div className="w-[80%]   h-[30rem]">
+              <img
+                src={aboutsection12}
+                alt=""
+                className="object-cover w-full h-full rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto  h-auto rounded-xl pr-4 pb-4 mt-10 justify-center cursor-pointer  overflow-hidden py-10"
+          style={{
+            boxShadow: "2px 4px 14.4px 0 rgba(0, 0, 0, 0.094)",
+            border: "1.78px solid #ECECEC",
+          }}
+        >
+          <div className="flex items-center justify-center w-full">
+            <Headingcontent title="Our" highlightedTitle="Commitment to You" />
+          </div>
+
+          {/* content */}
+          <div className="w-[85%] mx-auto flex justify-between items-center  mt-10 relative">
+            {/* image */}
+
+            <div className="w-[80%]   h-[30rem]">
+              <img
+                src={aboutsection13}
+                alt=""
+                className="object-cover w-full h-full rounded-lg"
+              />
+            </div>
+            {/* text content */}
+            <div className="w-[40%]  bg-[#056CB2] rounded-lg p-4 relative z-20  left-[-3rem]">
+              <p className="text-xl text-center text-white Bostonfont">
+                Excellence is not just a goal but a standard at Lika Real
+                Estate. We pride ourselves on delivering personalized service
+                that exceeds expectations. From initial consultation to closing
+                the deal, our knowledgeable agents provide expert advice and
+                support tailored to your unique needs. We understand that buying
+                or selling a home is more than just a transaction; it's a
+                life-changing experience. That's why we are dedicated to making
+                the process seamless and enjoyable for our clients.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="w-[90%] 2xl:w-[80%] xl:w-[80%] mx-auto  h-auto rounded-xl pr-4 pb-4 mt-10 justify-center cursor-pointer  overflow-hidden py-10"
+          style={{
+            boxShadow: "2px 4px 14.4px 0 rgba(0, 0, 0, 0.094)",
+            border: "1.78px solid #ECECEC",
+          }}
+        >
+          <div className="flex items-center justify-center w-full">
+            <Headingcontent
+              title="Explore"
+              highlightedTitle="Commitment to You"
+            />
+          </div>
+
+          {/* content */}
+          <div className="w-[85%] mx-auto flex justify-between items-center  mt-10 relative">
+            {/* text content */}
+            <div className="w-[40%]  bg-[#B5843F] rounded-lg p-4 relative z-20 right-[-3rem]">
+              <p className="text-xl text-center text-white Bostonfont">
+                Situated in the heart of Golem, we have a deep understanding of
+                the local market dynamics and trends. Whether you're new to the
+                area or a long-time resident, we offer insights into the best
+                neighborhoods, schools, and amenities Golem has to offer. Let us
+                help you find not just a house, but a place you can truly call
+                home.
+              </p>
+            </div>
+
+            {/* image */}
+
+            <div className="w-[80%]   h-[30rem]">
+              <img
+                src={aboutsection12}
+                alt=""
+                className="object-cover w-full h-full rounded-lg"
+              />
+            </div>
           </div>
         </div>
       </div>

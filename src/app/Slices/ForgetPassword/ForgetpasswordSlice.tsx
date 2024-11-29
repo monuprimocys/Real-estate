@@ -3,12 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ForgetPasswordState {
   email: string;
-  
 }
 
 const initialState: ForgetPasswordState = {
   email: "",
- 
 };
 
 // Create a slice for ForgetPasswo  form.

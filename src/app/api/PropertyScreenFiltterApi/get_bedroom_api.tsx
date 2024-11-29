@@ -9,7 +9,7 @@ interface SubmitResponse {
 export const get_bedroom_api = createApi({
   reducerPath: "get_bedroom_api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.8:8002/api",
+    baseUrl: "http://82.112.255.179/api",
   }),
   endpoints: (builder) => ({
     get_bedroom: builder.mutation<

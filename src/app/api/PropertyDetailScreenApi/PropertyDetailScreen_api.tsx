@@ -9,7 +9,7 @@ interface SubmitResponse {
 export const  PropertyDetailScreen_api = createApi({
   reducerPath: " PropertyDetailScreen_api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.8:8002/api",
+    baseUrl: "http://82.112.255.179/api",
   }),
   endpoints: (builder) => ({
     PropertyDetailScreen_api: builder.mutation<

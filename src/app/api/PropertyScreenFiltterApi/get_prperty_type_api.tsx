@@ -10,7 +10,7 @@ interface SubmitResponse {
 export const  get_property_type_api = createApi({
   reducerPath: " get_property_type_api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.8:8002/api",
+    baseUrl: "http://82.112.255.179/api",
   }),
   endpoints: (builder) => ({
      get_property_type: builder.mutation<

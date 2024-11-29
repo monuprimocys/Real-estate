@@ -1,14 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { hideModal, showModal } from "../../Features/modals/modalSlice";
 import loginbgimage from "../../assets/Image/loginbgimage.jpg";
 import logo from "../../assets/Image/logo.png";
 import emailicon from "../../assets/Image/loginemailicon.png";
-
+import { useForgetPasswoMutation } from "../../app/api/ForgetPasswordApi";
+import { Toaster, toast } from "react-hot-toast";
 
 const ForgotpasswordModal: React.FC = () => {
   const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [forgetPassword, { isLoading }] = useForgetPasswoMutation();
 
   // State from Redux store to check visibility of the modals
   const isVisible = useSelector(
@@ -36,10 +39,34 @@ const ForgotpasswordModal: React.FC = () => {
     };
   }, [isVisible, dispatch]);
 
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast.error("Please enter your email.");
+      return;
+    }
+
+    try {
+      const response = await forgetPassword({ email }).unwrap();
+      console.log(" the responce values from forget api", response)
+      if (response.success) {
+        toast.success(response.message);
+        dispatch(showModal("verifyOtpModal"));
+        dispatch(hideModal("forgotpasswordModal"));
+      } else {
+        toast.error(response.message||"Failed to send OTP. Please try again.");
+      }
+    } catch (error: any) {
+      toast.error(
+        error.data?.message || "An error occurred. Please try again."
+      );
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-85">
         <div
           ref={modalRef}
@@ -70,7 +97,12 @@ const ForgotpasswordModal: React.FC = () => {
 
           {/* Form Section */}
           <div className="w-full px-4 sm:px-6 md:px-8">
-            <form>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleForgotPassword();
+              }}
+            >
               {/* Email Input */}
               <div className="mb-5">
                 <label
@@ -91,6 +123,8 @@ const ForgotpasswordModal: React.FC = () => {
                     type="email"
                     id="email"
                     name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-14 py-3 bg-white border border-[#B5843F66] rounded-md focus:outline-none focus:ring-[#B5843F66] focus:border-[#B5843F66] text-[#000000] placeholder-gray-500"
                     placeholder="Enter your email"
                   />
@@ -100,15 +134,15 @@ const ForgotpasswordModal: React.FC = () => {
               {/* Next Button */}
               <div className="flex items-center justify-center mt-6">
                 <button
-                  type="button"
-                  className="px-[5.5rem] py-3 text-white bg-[#B5843F] rounded-xl focus:outline-none hover:bg-[#9b6d32] transition duration-200 w-fit"
-                  onClick={() => {
-                    // Dispatch action to show the Verify OTP modal
-                    dispatch(showModal("verifyOtpModal"));
-                    dispatch(hideModal("forgotpasswordModal"));
-                  }}
+                  type="submit"
+                  disabled={isLoading}
+                  className={`px-[5.5rem] py-3 text-white rounded-xl focus:outline-none transition duration-200 w-fit ${
+                    isLoading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-[#B5843F] hover:bg-[#9b6d32]"
+                  }`}
                 >
-                  Next
+                  {isLoading ? "Processing..." : "Next"}
                 </button>
               </div>
 

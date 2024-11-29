@@ -26,6 +26,11 @@ import get_all_status_Reducer from "../app/Slices/PropertyScreenFiltter/get_all_
 import { PropertyDetailScreen_api } from "./api/PropertyDetailScreenApi/PropertyDetailScreen_api";
 import forgetPasswordReducer from "../app/Slices/ForgetPassword/ForgetpasswordSlice";
 import { ForgetPasswordApi } from "../app/api/ForgetPasswordApi";
+import VerfiyOtpReducer from "../app/Slices/VerifyOtp/VerifyOtpSlice";
+import { VerifyOptapi } from "../app/api/VerifyOtpApi";
+import ResetPasswordReducer from "../app/Slices/ResetPassword/ResetPasswordSlice";
+import { ResetPasswordapi } from "../app/api/ResetPasswordApi";
+import { user_add_sceduleApi } from "./api/user_add_scedule/user_add_sceduleApi";
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +38,8 @@ export const store = configureStore({
     registration: registrationReducer,
     login: loginReducer,
     forgetpassword: forgetPasswordReducer,
+    verifyotp: VerfiyOtpReducer,
+    resetpassword: ResetPasswordReducer,
     get_all_main_location: get_all_main_location_Reducer,
     get_bathroom: get_bathroom_Reducer,
     get_bedroom: get_bedroom_Reducer,
@@ -43,6 +50,7 @@ export const store = configureStore({
     get_all_filtter: get_all_filtter_Reducer,
     get_all_status: get_all_status_Reducer,
     PropertyDetailScreen: PropertyDetailScreen_api.reducer,
+    user_add_scedule: user_add_sceduleApi.reducer,
 
     [Registrationapi.reducerPath]: Registrationapi.reducer,
     [Loginapi.reducerPath]: Loginapi.reducer,
@@ -58,6 +66,9 @@ export const store = configureStore({
     [get_all_status_api.reducerPath]: get_all_status_api.reducer,
     [PropertyDetailScreen_api.reducerPath]: PropertyDetailScreen_api.reducer,
     [ForgetPasswordApi.reducerPath]: ForgetPasswordApi.reducer,
+    [VerifyOptapi.reducerPath]: VerifyOptapi.reducer,
+    [ResetPasswordapi.reducerPath]: ResetPasswordapi.reducer,
+    [user_add_sceduleApi.reducerPath]: user_add_sceduleApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -73,7 +84,10 @@ export const store = configureStore({
       .concat(get_filtter_api.middleware)
       .concat(get_all_status_api.middleware)
       .concat(PropertyDetailScreen_api.middleware)
-      .concat(ForgetPasswordApi.middleware),
+      .concat(ForgetPasswordApi.middleware)
+      .concat(VerifyOptapi.middleware)
+      .concat(ResetPasswordapi.middleware)
+      .concat(user_add_sceduleApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

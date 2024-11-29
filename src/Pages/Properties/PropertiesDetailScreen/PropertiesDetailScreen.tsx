@@ -20,6 +20,7 @@ import propertydetailarroicon from "../../../assets/Image/propertydetailscreenty
 import PropertiesDetailScreenSimilarProperties from "./PropertiesDetailScreenSimilarProperties";
 import prevIcon from "../../../assets/Image/arrow-left.png";
 import nextIcon from "../../../assets/Image/arrow-right.png";
+import FormScheduleTour from "../FormScheduleTour/FormScheduleTour";
 function PropertiesDetailScreen() {
   const { id } = useParams();
   const [propertyDetails, setPropertyDetails] = useState(null);
@@ -475,6 +476,28 @@ function PropertiesDetailScreen() {
                   <div className="flex items-center justify-center w-full pt-8">
                     <BtnwithoutArrow label="Know More" />
                   </div>
+                </div>
+
+                <div
+                  className="w-full h-auto p-6 mx-auto rounded-md shadow-md bg-[#FFFFFF]"
+                  style={{
+                    boxShadow: "2px 4px 14.4px 0 rgba(0, 0, 0, 0.094)",
+                    border: "1.78px solid #ECECEC",
+                  }}
+                >
+                  <div className="w-full h-auto">
+                    <h3 className="text-[#B5843F] font-bold Bostonfont text-2xl line-clamp-1 py-4">
+                      Schedule A Tour
+                    </h3>
+                    <div className="flex flex-wrap items-center justify-center w-full space-y-4 md:space-y-0 md:w-[80%]  mx-auto">
+                      {/* form  for scheduling*/}
+                      <div className="flex items-center justify-center w-full ">
+                        <FormScheduleTour/>
+                      </div>
+                    </div>
+                  </div>
+
+                  
                 </div>
               </div>
 

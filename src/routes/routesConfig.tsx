@@ -21,7 +21,7 @@ const routesConfig: RouteConfig[] = [
   { path: "/forrent", element: <ForRent />, name: "For Rent" },
   { path: "/about", element: <About />, name: "About" },
   { path: "/contact", element: <Contact />, name: "Contact" },
-  { path: "/english", element: <English />, name: "English" },
+  // { path: "/english", element: <English />, name: "English" },
   { path: "/propertiesDetail/:id", element: <PropertiesDetailScreen />, name: "Property  Detail" },
 ];
 
