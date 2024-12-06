@@ -9,17 +9,14 @@ import msgIcon from "../../../assets/Image/message-text.png";
 import propertyDetailicon from "../../../assets/Image/propertidetailscreenidicon.png";
 import PropertiesDetailScreenHeader from "./PropertiesDetailScreenHeader";
 import CircularProgress from "@mui/joy/CircularProgress";
-import GoogleMapReact from "google-map-react";
-import { MdLocationPin } from "react-icons/md";
 import properticeicon from "../../../assets/Image/properticeicon.png";
 import properticescallicon from "../../../assets/Image/properticeiconcall.png";
 import properticesiconwhatshop from "../../../assets/Image/properticeiconwhatshp.png";
 import smsicon from "../../../assets/Image/sms.jpg";
-import BtnwithoutArrow from "../../../componets/Buttons/BtnwithoutArrow";
 import propertydetailarroicon from "../../../assets/Image/propertydetailscreentypearrowicon.png";
 import PropertiesDetailScreenSimilarProperties from "./PropertiesDetailScreenSimilarProperties";
-import prevIcon from "../../../assets/Image/arrow-left.png";
-import nextIcon from "../../../assets/Image/arrow-right.png";
+import prevIcon from "../../../assets/Image/arrow-up.png";
+import nextIcon from "../../../assets/Image/arrow-dwon.png";
 import FormScheduleTour from "../FormScheduleTour/FormScheduleTour";
 function PropertiesDetailScreen() {
   const { id } = useParams();
@@ -62,6 +59,9 @@ function PropertiesDetailScreen() {
 
     fetchPropertyDetails();
   }, [id, getPropertyDetail]);
+
+  const { first_name, last_name, mobile, whatsup_number, email } =
+    venderDetail || {};
 
   // Function to continuously slide the images
   const slideImages = () => {
@@ -113,21 +113,20 @@ function PropertiesDetailScreen() {
     };
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (thumbnails.length > visibleCards) {
-        slideImages();
-      }
-    }, 50000);
 
-    return () => clearInterval(interval);
-  }, [thumbnails, visibleCards]);
+  // this is for auto slider code left side card 
 
-  // vender details
-  const { first_name, last_name, mobile, whatsup_number, email } =
-    venderDetail || {};
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (thumbnails.length > visibleCards && thumbnails.length >= 4) {
+  //       slideImages();
+  //     }
+  //   }, 1000);
 
-  console.log("the values of the ", thumbnails);
+  //   return () => clearInterval(interval);
+  // }, [thumbnails, visibleCards]);
+
+
 
   return (
     <>
@@ -139,10 +138,29 @@ function PropertiesDetailScreen() {
           </div>
         ) : (
           <>
-            <div className="md:w-[95%] w-full xl:w-[90%] mx-auto xl:flex overflow-hidden grid gap-y-6 gap-x-5 mt-10 h-auto ">
+            <div className="md:w-[95%] w-full xl:w-[90%] mx-auto xl:flex overflow-hidden grid gap-y-6 gap-x-5 mt-10 h-auto  2xl:w-[80%]">
               {/* Left Column: Thumbnails Carousel */}
-              <div className="relative w-[90%] mx-auto xl:w-[14%] h-full overflow-hidden ">
+              <div className="relative w-[90%] mx-auto xl:w-[14%] h-full overflow-hidden  pb-2">
                 <div className="flex flex-col items-center">
+                  {/* up btn */}
+
+                  <div
+                    className={`flex items-center justify-center w-full pb-2`}
+                  >
+                    {thumbnails.length > 4 && (
+                      <button
+                        onClick={() => slideImages()}
+                        className="p-2 transform bg-white rounded-full shadow-lg hover:bg-gray-200"
+                      >
+                        <img
+                          src={prevIcon}
+                          alt="Previous"
+                          className="w-6 h-6"
+                        />
+                      </button>
+                    )}
+                  </div>
+
                   <div
                     className="grid w-full h-full grid-cols-1 grid-rows-1 transition-transform duration-500 ease-in-out xl:grid-cols-1 gap-y-5 "
                     style={{ transform: `translateY(-${0}px)` }}
@@ -150,11 +168,10 @@ function PropertiesDetailScreen() {
                     {thumbnails.slice(0, visibleCards).map((media, index) => (
                       <div
                         key={index}
-                        className={`h-[10rem] md:h-[13.8rem] lg:h-[22rem] xl:h-[12.2rem] 2xl:h-[13.8rem] rounded-xl flex-shrink-0 cursor-pointer ${
-                          media === mainImage
-                            ? "border-2 border-[#B5843F] shadow-lg rounded-xl"
-                            : ""
-                        }`}
+                        className={`h-[10rem] md:h-[13.8rem] lg:h-[22rem] xl:h-[12.2rem]  rounded-xl flex-shrink-0 cursor-pointer ${media === mainImage
+                          ? "border-2 border-[#B5843F] shadow-lg rounded-xl"
+                          : ""
+                          }`}
                         onClick={() => handleThumbnailClick(media)} // Click handler for thumbnails
                       >
                         {media.type === "image" ? (
@@ -176,20 +193,16 @@ function PropertiesDetailScreen() {
                       </div>
                     ))}
                   </div>
-
-                  <div className="absolute z-10 flex items-center justify-between w-full gap-6 bottom-6">
-                    <button
-                      onClick={() => slideImages()} // Manual slide
-                      className="absolute left-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
-                    >
-                      <img src={prevIcon} alt="Previous" className="w-6 h-6" />
-                    </button>
-                    <button
-                      onClick={() => slideImages()} // Manual slide
-                      className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
-                    >
-                      <img src={nextIcon} alt="Next" className="w-6 h-6" />
-                    </button>
+                  {/* down btn */}
+                  <div className="flex items-center justify-center pt-2 h-fit">
+                    {thumbnails.length > 4 && (
+                      <button
+                        onClick={() => slideImages()}
+                        className="right-0 p-2 transform bg-white rounded-full shadow-lg hover:bg-gray-200"
+                      >
+                        <img src={nextIcon} alt="Next" className="w-6 h-6" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -209,7 +222,7 @@ function PropertiesDetailScreen() {
                         className="w-full h-full transition-all duration-500 ease-in-out rounded-xl"
                       />
                     ) : mainImage?.type === "video" ? (
-                      <div className="relative w-full h-full">
+                      <div className="relative w-full h-full rounded-xl">
                         <video
                           src={mainImage?.url}
                           alt={`property-video`}
@@ -312,7 +325,7 @@ function PropertiesDetailScreen() {
               </div>
             </div>
 
-            <div className="xl:w-[90%] mx-auto mt-10 xl:flex justify-between items-start gap-6 md:w-[90%] ">
+            <div className="xl:w-[90%] 2xl:w-[80%] mx-auto mt-10 xl:flex justify-between items-start gap-6 md:w-[90%] ">
               {/* Left side - 70% width */}
               <div className="xl:w-[80%] flex flex-col gap-10 h-auto w-[90%] md:w-[95%] mx-auto">
                 {/* Description section */}
@@ -473,9 +486,9 @@ function PropertiesDetailScreen() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center w-full pt-8">
+                  {/* <div className="flex items-center justify-center w-full pt-8">
                     <BtnwithoutArrow label="Know More" />
-                  </div>
+                  </div> */}
                 </div>
 
                 <div
@@ -492,12 +505,10 @@ function PropertiesDetailScreen() {
                     <div className="flex flex-wrap items-center justify-center w-full space-y-4 md:space-y-0 md:w-[80%]  mx-auto">
                       {/* form  for scheduling*/}
                       <div className="flex items-center justify-center w-full ">
-                        <FormScheduleTour/>
+                        <FormScheduleTour />
                       </div>
                     </div>
                   </div>
-
-                  
                 </div>
               </div>
 

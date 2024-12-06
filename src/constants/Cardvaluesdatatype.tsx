@@ -14,4 +14,5 @@ export interface CardProps {
   baths: number; // Number of baths
   area: number; // Area of the property in square feet or meters
   price: number; // Price of the property
+  status: string; // Status
 }

@@ -28,7 +28,7 @@ function PropertiesDetailScreenVideoSection() {
   // Filter out the videos from the property_image array
   const videos = property_image.filter((item) => item.type === "video");
 
-  console.log("Filtering video ", videos);
+
 
   return (
     <div className="w-full h-[30rem]  bg-slate-500 rounded-lg">

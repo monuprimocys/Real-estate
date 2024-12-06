@@ -5,7 +5,7 @@ import SimpleBtn from "../../../componets/Buttons/SimpleBtn";
 
 function Section2() {
   return (
-    <div className="relative flex items-center justify-center w-full min-h-[80vh] bg-center bg-no-repeat bg-cover  ">
+    <div className="relative flex items-center justify-center w-full min-h-[80vh] bg-center bg-no-repeat bg-cover   ">
       {/* Background Image with Opacity */}
       <div
         className="absolute inset-0"
@@ -17,7 +17,7 @@ function Section2() {
         }}
       />
 
-      <div className="w-[90%] 2xl:w-[82%] xl:w-[80%] md:w-[94%] h-full -z-50  ">
+      <div className="w-[90%] 2xl:w-[82%] xl:w-[80%] md:w-[94%] h-full  z-50 ">
         <div className="grid items-center justify-center w-full h-full grid-cols-1 gap-8 xl:grid-rows-1 xl:grid-cols-2 pt-[4rem]">
           {/* Left Column: Image */}
           <div className="flex items-center justify-center cursor-pointer">
@@ -29,7 +29,7 @@ function Section2() {
           </div>
 
           {/* Right Column: Text */}
-          <div className="flex flex-col gap-y-5 md:w-[94%] lg:w-[95%] xl:w-[90%] 2xl:w-[100%] w-[95%] mx-auto  justify-end z-50">
+          <div className="flex flex-col gap-y-5 md:w-[94%] lg:w-[95%] xl:w-[90%] 2xl:w-[100%] w-[95%] mx-auto  justify-end">
             <div className="flex flex-col items-start">
               <h2 className="text-[#000000] Bostonfont text-2xl md:text-4xl font-semibold">
                 We are
@@ -57,7 +57,7 @@ function Section2() {
                 guide you every step of the way.
               </p>
             </div>
-            <div className="z-40 m-0 opacity-100 cursor-pointer ">
+            <div className="m-0 opacity-100 cursor-pointer ">
               <SimpleBtn />
             </div>
           </div>

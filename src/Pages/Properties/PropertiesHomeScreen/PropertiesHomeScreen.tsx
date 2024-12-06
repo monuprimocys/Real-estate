@@ -1,7 +1,7 @@
 // PropertiesHomeScreen.js
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
+import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate for routing
 import { useGet_all_filtterMutation } from "../../../app/api/PropertyScreenFiltterApi/filtter_api";
 import PropertiesHomeScreenCard from "../../../componets/Cards/PropertiesHomeScreenCard/PropertiesHomeScreenCard";
 import Pagination from "@mui/material/Pagination";
@@ -18,23 +18,24 @@ import PropertyHomeScreenFeactures from "../PropertyHomeScreenFeactures/Property
 import properticescallicon from "../../../assets/Image/properticeiconcall.png";
 import properticesiconwhatshop from "../../../assets/Image/properticeiconwhatshp.png";
 import smsicon from "../../../assets/Image/sms.jpg";
-
 import GMap from "../PropertyHomeScreenFeactures/googlemap";
 
 function PropertiesHomeScreen() {
   const filterData = useSelector((state) => state.get_all_filtter);
+
+  const location = useLocation();
+
   const allfilltervalues =
     filterData?.filterAllDropDownResponse?.filter_property || [];
-  const [defaultApiValues, setDefaultApiValues] = useState([]);
+
   const [displayedProperties, setDisplayedProperties] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [mapCenter, setMapCenter] = useState({ lat: 23.0714, lng: 72.5168 }); // Default center
 
   const itemsPerPage = 6;
 
   const [defaultshowallapivalues] = useGet_all_filtterMutation();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,17 +43,19 @@ function PropertiesHomeScreen() {
       try {
         const defaultResponse = await defaultshowallapivalues().unwrap();
         if (defaultResponse.response_code === "1") {
-          const defaultProperties = defaultResponse.filter_property || [];
-          setDefaultApiValues(defaultProperties);
-          setDisplayedProperties(defaultProperties);
+          let defaultProperties = defaultResponse.filter_property || [];
 
-          // Set map center to the first property if available
-          if (defaultProperties.length > 0) {
-            setMapCenter({
-              lat: parseFloat(defaultProperties[0].lat),
-              lng: parseFloat(defaultProperties[0].lon),
-            });
+          if (location.pathname === "/forsale") {
+            defaultProperties = defaultProperties.filter(
+              (property) => property.status === "Sale"
+            );
+          } else if (location.pathname === "/forrent") {
+            defaultProperties = defaultProperties.filter(
+              (property) => property.status === "Rent"
+            );
           }
+
+          setDisplayedProperties(defaultProperties);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,15 +65,13 @@ function PropertiesHomeScreen() {
     };
 
     fetchData();
-  }, [defaultshowallapivalues]);
+  }, [defaultshowallapivalues, location.pathname]);
 
   useEffect(() => {
     if (allfilltervalues.length) {
       setDisplayedProperties(allfilltervalues);
-    } else {
-      setDisplayedProperties(defaultApiValues);
     }
-  }, [allfilltervalues, defaultApiValues]);
+  }, [allfilltervalues]);
 
   const paginatedProperties = displayedProperties.slice(
     (currentPage - 1) * itemsPerPage,
@@ -84,7 +85,6 @@ function PropertiesHomeScreen() {
   const handleCardClick = (id) => {
     navigate(`/propertiesDetail/${id}`);
   };
-
 
   return (
     <div className="w-full h-auto mt-10">
@@ -123,6 +123,7 @@ function PropertiesHomeScreen() {
                         area={property.area}
                         price={property.price}
                         title={""}
+                        status={property.status}
                       />
                     </div>
                   ))
@@ -150,7 +151,10 @@ function PropertiesHomeScreen() {
             </div>
 
             <div className="flex flex-col items-center justify-between h-full w-[93%] mx-auto gap-6 md:w-[100%] lg:w-[97%]  pr-2  xl:w-[95%] overflow-hidden">
-              <div style={{ width: "100%" }} className="min-h-screen">
+              <div
+                style={{ width: "100%" }}
+                className="min-h-screen 2xl:h-[63rem] "
+              >
                 {/* <GoogleMapReact
                   bootstrapURLKeys={{
                     key: "AIzaSyAMZ4GbRFYSevy7tMaiH5s0JmMBBXc0qBA",

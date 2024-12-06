@@ -26,17 +26,31 @@ export default function FormScheduleTour() {
 
   const property_id = id;
 
-  console.log("The selected property_id", property_id);
+  
 
   // Form submission handler
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
+    // Validation
+    if (
+      !property_id ||
+      !email ||
+      !selectedDate ||
+      !selectedTime ||
+      !name ||
+      !phoneNumber ||
+      !messageText
+    ) {
+      toast.error("All fields are required!");
+      return;
+    }
+
     const formData = {
       property_id: property_id,
       email: email,
-      date: selectedDate?.format("MM/DD/YYYY"),
-      time: selectedTime?.format("HH:mm"),
+      date: selectedDate.format("MM/DD/YYYY"),
+      time: selectedTime.format("HH:mm"),
       name: name,
       phone: phoneNumber,
       message: messageText,
@@ -46,9 +60,16 @@ export default function FormScheduleTour() {
     sendMessage(formData)
       .then((response) => {
         toast.success(response.data?.message);
+        // Clear form data
+        setEmail("");
+        setSelectedDate(null);
+        setSelectedTime(null);
+        setName("");
+        setPhoneNumber("");
+        setMessageText("");
       })
       .catch((error) => {
-        toast.error(response.data?.message);
+        toast.error(error.response?.data?.message || "Something went wrong");
       });
   };
 

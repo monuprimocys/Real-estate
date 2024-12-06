@@ -24,10 +24,9 @@ function PropertiesDetailScreenSimilarProperties() {
       try {
         const response = await getFeatures({ id: id }).unwrap();
 
-        console.log("223232", response);
 
         if (response?.response_code === "1") {
-          console.log("Response is error", response);
+         
 
           setFeaturesData(response.similar_products || []);
           return;
@@ -39,7 +38,7 @@ function PropertiesDetailScreenSimilarProperties() {
     fetchFeatures();
   }, [getFeatures, id]);
 
-  console.log("Fetching features", featuresData);
+ 
 
   useEffect(() => {
     function updateCardsCount() {

@@ -11,28 +11,38 @@ import Headingcontent from "../../../componets/Headingcontent/Headingcontent";
 import PropertiesHomeScreenCard from "../../../componets/Cards/PropertiesHomeScreenCard/PropertiesHomeScreenCard";
 import prevIcon from "../../../assets/Image/arrow-left.png";
 import nextIcon from "../../../assets/Image/arrow-right.png";
+import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
 
 function PropertyHomeScreenFeatures() {
   const [getFeatures, { isLoading, isError }] = useGet_featuresMutation();
   const [featuresData, setFeaturesData] = useState([]);
-  const [startIndex, setStartIndex] = useState(1); // Start with the first real card
+  const [startIndex, setStartIndex] = useState(1);
   const [visibleCardsCount, setVisibleCardsCount] = useState(4);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
-  // Fetch features data
+  const location = useLocation();
+  const navigate = useNavigate(); // Initialize navigate
+
   useEffect(() => {
     async function fetchFeatures() {
       try {
         const response = await getFeatures().unwrap();
-        setFeaturesData(response.feature_property || []);
+        let filteredData = response.feature_property || [];
+
+        if (location.pathname === "/forsale") {
+          filteredData = filteredData.filter((item) => item.status === "Sale");
+        } else if (location.pathname === "/forrent") {
+          filteredData = filteredData.filter((item) => item.status === "Rent");
+        }
+
+        setFeaturesData(filteredData);
       } catch (error) {
         console.error("Error fetching features data:", error);
       }
     }
     fetchFeatures();
-  }, [getFeatures]);
+  }, [getFeatures, location.pathname]);
 
-  // Update visibleCardsCount based on screen size
   useEffect(() => {
     function updateCardsCount() {
       const width = window.innerWidth;
@@ -79,10 +89,8 @@ function PropertyHomeScreenFeatures() {
     ...featuresData,
   ];
 
-  // Calculate translateX for smooth sliding
   const translateXValue = -(startIndex * (100 / visibleCardsCount));
 
-  // Function to move to the previous card
   const handlePrevClick = () => {
     setIsTransitioning(true);
     setStartIndex((prevIndex) =>
@@ -90,7 +98,6 @@ function PropertyHomeScreenFeatures() {
     );
   };
 
-  // Function to move to the next card
   const handleNextClick = () => {
     setIsTransitioning(true);
     setStartIndex((prevIndex) =>
@@ -98,15 +105,18 @@ function PropertyHomeScreenFeatures() {
     );
   };
 
+  const handleCardClick = (id) => {
+    navigate(`/propertiesDetail/${id}`); // Navigate to detail screen
+  };
+
   return (
     <div className="w-full h-full mt-10 rounded-[4rem] py-16 overflow-hidden">
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center w-[90%] mx-auto">
         <h2 className="text-2xl font-bold text-black md:text-5xl Bostonfont">
           <Headingcontent title="Featured " highlightedTitle=" Properties" />
         </h2>
       </div>
       <div className="relative mt-10 overflow-hidden 2xl:w-[80%] mx-auto w-[90%] md:w-[95%] lg:w-[90%] xl:w-[85%]">
-        {/* Slider */}
         <div
           className={`flex ${
             isTransitioning
@@ -122,6 +132,7 @@ function PropertyHomeScreenFeatures() {
               key={index}
               className="flex-shrink-0 gap-6 pb-4 overflow-hidden rounded-lg"
               style={{ flex: `0 0 ${100 / visibleCardsCount}%` }}
+              onClick={() => feature && handleCardClick(feature.id)} // Pass feature.id
             >
               {feature && (
                 <PropertiesHomeScreenCard
@@ -140,13 +151,13 @@ function PropertyHomeScreenFeatures() {
                   baths={feature.bathroom}
                   area={feature.area}
                   price={feature.price}
+                  status={feature.status}
                 />
               )}
             </div>
           ))}
         </div>
 
-        {/* Previous and Next buttons */}
         <button
           onClick={handlePrevClick}
           className="absolute left-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"

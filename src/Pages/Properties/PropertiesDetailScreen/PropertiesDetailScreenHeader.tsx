@@ -5,7 +5,7 @@ import Header from "../../Header/Header";
 
 function PropertiesDetailScreenHeader() {
   const location = useLocation();
-  console.log("Location", location.pathname);
+  
   return (
     <>
       <div

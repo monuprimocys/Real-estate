@@ -34,8 +34,6 @@ const LoginModal: React.FC = () => {
   };
 
   const validateForm = () => {
-    
-  
     return true;
   };
 
@@ -46,8 +44,6 @@ const LoginModal: React.FC = () => {
 
     try {
       const response = await loginuser(formData).unwrap();
-
-      console.log("API Response:", response);
 
       if (response.status === "success") {
         toast.success(response.message);
@@ -78,11 +74,18 @@ const LoginModal: React.FC = () => {
     };
 
     if (isVisible) {
+      // Disable body scroll when the modal is open
+      document.body.style.overflow = "hidden";
       document.addEventListener("mousedown", handleClickOutside);
+    } else {
+
+      document.body.style.overflow = "auto";
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+
+      document.body.style.overflow = "auto";
     };
   }, [isVisible, dispatch]);
 

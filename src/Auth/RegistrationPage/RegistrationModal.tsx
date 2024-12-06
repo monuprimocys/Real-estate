@@ -84,7 +84,7 @@ const RegistrationModal: React.FC = () => {
     try {
       const response = await registerUser(formData).unwrap();
 
-      console.log("API Response:", response);
+     
 
       if (response.status === "success") {
         dispatch(hideModal("registrationModal"));

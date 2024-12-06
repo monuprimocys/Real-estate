@@ -47,7 +47,7 @@ const ForgotpasswordModal: React.FC = () => {
 
     try {
       const response = await forgetPassword({ email }).unwrap();
-      console.log(" the responce values from forget api", response)
+      
       if (response.success) {
         toast.success(response.message);
         dispatch(showModal("verifyOtpModal"));

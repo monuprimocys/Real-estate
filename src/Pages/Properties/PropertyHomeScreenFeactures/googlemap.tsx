@@ -55,10 +55,10 @@ const GMap: React.FC = () => {
               bathrooms: property.bathroom,
               location: property.location,
               property_image: property.property_image,
+              area: property.area,
             }));
 
             setGetAllLatLonValues(latLonValues);
-            console.log("Extracted lat, lon, and id values:", latLonValues);
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -73,7 +73,10 @@ const GMap: React.FC = () => {
     if (googleLoaded && window.google && googleMapRef.current) {
       const googleMap = new window.google.maps.Map(googleMapRef.current, {
         center: { lat: 23.073292, lng: 72.560402 },
-        zoom: 13,
+        zoom: 10,
+        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+     
+       
       });
 
       const bounds = new window.google.maps.LatLngBounds();
@@ -88,8 +91,6 @@ const GMap: React.FC = () => {
             scaledSize: new window.google.maps.Size(50, 50),
           },
         });
-
-        console.log("Creating marker", getAllllatlonvalues);
 
         const infoWindow = new window.google.maps.InfoWindow({
           content: `<div style="display: flex; flex-direction: column; align-items: center; border-radius: 12px; padding: 15px; max-width: 300px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); font-family: Arial, sans-serif; position: relative; background-color: #fff; overflow: hidden;">
@@ -180,8 +181,11 @@ const GMap: React.FC = () => {
   }, [googleLoaded, getAllllatlonvalues]);
 
   return (
-    <div className="items-center justify-center w-full h-full">
-      <div ref={googleMapRef} className="w-full h-full mx-auto "></div>
+    <div className="items-center justify-center w-full h-full rounded-lg">
+      <div
+        ref={googleMapRef}
+        className="w-full h-full mx-auto rounded-lg"
+      ></div>
     </div>
   );
 };

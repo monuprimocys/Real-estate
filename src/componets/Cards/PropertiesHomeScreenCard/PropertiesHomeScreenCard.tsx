@@ -17,6 +17,8 @@ const PropertiesHomeScreenCard: React.FC<CardProps> = ({
   baths,
   area,
   price,
+  status
+ 
 }) => {
   return (
     <div className="overflow-hidden bg-white rounded-[1.2rem] shadow-xl w-[21.8rem]  lg:w-[27rem] xl:w-[30rem] 2xl:w-[23rem] group cursor-pointer">
@@ -29,9 +31,9 @@ const PropertiesHomeScreenCard: React.FC<CardProps> = ({
             alt={title}
           />
         </div>
-        {/* Sell Tag */}
+        {/* Sell  and rent Tag  */}
         <span className="absolute top-3 left-0 px-6 py-1 text-xs font-bold text-white bg-[#056CB2] rounded-r-md Bostonfont cursor-pointer">
-          Sell
+          {status}
         </span>
         {/* Heart Icon */}
         <div className="absolute flex items-center justify-center w-10 h-10 transition-opacity bg-white rounded-full cursor-pointer hover:bg-[#056CB2] top-3 right-4 opacity-90 hover:opacity-100 ">

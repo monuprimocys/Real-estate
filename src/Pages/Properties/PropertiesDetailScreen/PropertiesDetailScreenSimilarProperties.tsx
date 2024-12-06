@@ -51,11 +51,11 @@ function PropertiesDetailScreenSimilarProperties() {
   }, []);
 
   useEffect(() => {
-    if (featuresData.length > 0) {
+    if (featuresData.length > 4) {
       const slideInterval = setInterval(() => {
         setIsTransitioning(true);
         setStartIndex((prevIndex) => prevIndex + 1);
-      }, 3000);
+      }, 4000);
 
       return () => clearInterval(slideInterval);
     }
@@ -144,6 +144,7 @@ function PropertiesDetailScreenSimilarProperties() {
                   baths={feature.bathroom}
                   area={feature.area}
                   price={feature.price}
+                  status={feature.status}
                 />
               )}
             </div>
@@ -151,18 +152,22 @@ function PropertiesDetailScreenSimilarProperties() {
         </div>
 
         {/* Previous and Next buttons */}
-        <button
-          onClick={handlePrevClick}
-          className="absolute left-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
-        >
-          <img src={prevIcon} alt="Previous" className="w-6 h-6" />
-        </button>
-        <button
-          onClick={handleNextClick}
-          className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
-        >
-          <img src={nextIcon} alt="Next" className="w-6 h-6" />
-        </button>
+        {featuresData.length > 4 && (
+          <button
+            onClick={handlePrevClick}
+            className="absolute left-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
+          >
+            <img src={prevIcon} alt="Previous" className="w-6 h-6" />
+          </button>
+        )}
+        {featuresData.length > 4 && (
+          <button
+            onClick={handleNextClick}
+            className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow-lg top-1/2 hover:bg-gray-200"
+          >
+            <img src={nextIcon} alt="Next" className="w-6 h-6" />
+          </button>
+        )}
       </div>
     </div>
   );

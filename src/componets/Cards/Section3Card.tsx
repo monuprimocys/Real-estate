@@ -1,5 +1,6 @@
 import React from "react";
 import { CardProps } from "../../constants/Cardvaluesdatatype"; // Adjust the import path accordingly
+import { useNavigate } from "react-router-dom";
 
 const Card: React.FC<CardProps> = ({
   mainImage,
@@ -17,9 +18,15 @@ const Card: React.FC<CardProps> = ({
   baths,
   area,
   price,
+  status,
+
+
 }) => {
+
+  const navigate = useNavigate();
+
   return (
-    <div className="overflow-hidden bg-white rounded-[1.2rem] shadow-xl sm:w-[25rem] md:w-[45rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[25rem] group">
+    <div className="overflow-hidden bg-white rounded-[1.2rem] shadow-xl sm:w-[25rem] md:w-[45rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[31rem] group">
       {/* Top Image Section */}
       <div className="relative">
         <div className="overflow-hidden">
@@ -31,7 +38,7 @@ const Card: React.FC<CardProps> = ({
         </div>
         {/* Sell Tag */}
         <span className="absolute top-3 left-0 px-6 py-1 text-xs font-bold text-white bg-[#056CB2] rounded-r-md Bostonfont cursor-pointer">
-          Sell
+          {status}
         </span>
         {/* Heart Icon */}
         <div className="absolute flex items-center justify-center w-10 h-10 transition-opacity bg-white rounded-full cursor-pointer hover:bg-[#056CB2] top-3 right-4 opacity-90 hover:opacity-100 ">
@@ -88,7 +95,10 @@ const Card: React.FC<CardProps> = ({
           </div>
 
           <div className="flex space-x-3">
-            <button className="flex items-center px-3 py-1 text-sm text-white bg-[#B5843F] Bostonfont rounded-md space-x-1 hover:bg-[#9c6e34] transition-colors">
+            <button className="flex items-center px-3 py-1 text-sm text-white bg-[#B5843F] Bostonfont rounded-md space-x-1 hover:bg-[#9c6e34] transition-colors"
+              onClick={() => {
+                navigate("/contact");
+              }}>
               <img src={icon4} alt="Message" className="w-4 h-4" />
               <span>Message</span>
             </button>
